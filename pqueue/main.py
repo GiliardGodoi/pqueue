@@ -26,7 +26,7 @@ class PriorityQueue():
         return len(self.entries_finder)
 
     def __bool__(self):
-        return bool(self.queue)
+        return bool(self.entries_finder)
 
     def __str__(self):
         return f"PQueue({len(self.queue)})"
@@ -62,4 +62,4 @@ class PriorityQueue():
         entry[-1] = self.REMOVED ## marca a última posição como REMOVED
 
     def empty(self):
-        return len(self.queue) == 0
+        return len(self.entries_finder) == 0

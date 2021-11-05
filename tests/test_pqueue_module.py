@@ -3,7 +3,7 @@ from itertools import product
 from string import ascii_uppercase as symbols
 
 from pqueue import PQueue
-from pytest import fixture
+from pytest import mark, fixture
 
 
 @fixture
@@ -16,9 +16,9 @@ def pq():
 
     return pq
 
-@fixture
-def elements():
-    return [ ''.join(e) for e in product(symbols, repeat=3)]
+
+def get_elements(nro):
+    return [ ''.join(random.choices(symbols, k=3)) for _ in range(nro)]
 
 def test_insert_the_same_element_twice(pq):
 
@@ -60,8 +60,13 @@ def test_len_method(pq):
         _, _ = pq.pop()
         expected -= 1
 
-def test_random_insertion(elements):
-    weights = [ i for i in range(len(elements))]
+@mark.parametrize(
+    'quantity',
+    [10_000, 100_000, 500_000]
+)
+def test_random_insertion(quantity):
+    elements = get_elements(quantity)
+    weights = [ i for i in range(quantity)]
     random.shuffle(weights)
 
     pq = PQueue()
@@ -69,14 +74,19 @@ def test_random_insertion(elements):
         pq.push(w, e)
 
     before = -1
-    while pq:
+    while not pq.empty():
         value, _ = pq.pop()
         if value < before:
             raise RuntimeError()
         before = value
 
-def test_decreasing_insertion(elements):
-    weights = [ i for i in range(len(elements))]
+@mark.parametrize(
+    'quantity',
+    [10_000, 100_000, 500_000]
+)
+def test_decreasing_insertion(quantity):
+    elements = get_elements(quantity)
+    weights = [ i for i in range(quantity)]
     weights = sorted(weights, reverse=True)
 
     pq = PQueue()
@@ -84,7 +94,7 @@ def test_decreasing_insertion(elements):
         pq.push(w, e)
 
     before = -1
-    while pq:
+    while not pq.empty():
         value, _ = pq.pop()
         if value < before:
             raise RuntimeError()
