@@ -75,7 +75,7 @@ def test_random_insertion(elements):
             raise RuntimeError()
         before = value
 
-def test_ascending_insertion(elements):
+def test_decreasing_insertion(elements):
     weights = [ i for i in range(len(elements))]
     weights = sorted(weights, reverse=True)
 
