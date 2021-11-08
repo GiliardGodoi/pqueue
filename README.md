@@ -24,3 +24,13 @@ The implementation proposed here uses the ```heapq``` module underneath. Some co
 - __contains__ to verify if an element belong to the queue
 - ```push``` insert an elements
 - ```pop``` return the minimum element
+
+## Installation
+
+I recommend that you should install this module in development mode.
+
+```python
+git clone https://github.com/GiliardGodoi/pqueue.git
+cd pqueue
+python -m pip install -e .
+```
