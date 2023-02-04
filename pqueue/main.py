@@ -2,20 +2,22 @@
 from heapq import heapify, heappop, heappush
 import itertools
 
-class PriorityQueue():
-    '''
-        Priority Queue implementation
 
-        There is a tradeoff between speed and memory.
+class PriorityQueue:
+    """
+    Priority Queue implementation
 
-        In this implementations we've choosed the solution presented in official documentation for heapq module.
-        More details in <https://docs.python.org/3/library/heapq.html>
+    There is a tradeoff between speed and memory.
 
-    '''
+    In this implementations we've choosed the solution presented in official documentation for heapq module.
+    More details in <https://docs.python.org/3/library/heapq.html>
+
+    """
+
     def __init__(self):
         self.queue = list()
         heapify(self.queue)
-        self.REMOVED = '<removed>'
+        self.REMOVED = "<removed>"
         self.entries_finder = dict()
         self.counter = itertools.count()
 
@@ -32,12 +34,12 @@ class PriorityQueue():
         return f"PQueue({len(self.queue)})"
 
     def push(self, priority, item):
-        '''
+        """
         Insere um elemento na fila de prioridade.
         @paramns: priority <int> e item <vértice> do grafo
-        '''
+        """
 
-        if item in self.entries_finder :
+        if item in self.entries_finder:
             self.__mark_remove(item)
 
         seq = next(self.counter)
@@ -47,10 +49,10 @@ class PriorityQueue():
         return item
 
     def pop(self):
-        '''
+        """
         Retorna o menor <item> elemento da fila de prioridade.
-        '''
-        while self.queue :
+        """
+        while self.queue:
             # priority, seq, item = heappop(self.queue)
             priority, _, item = heappop(self.queue)
             if item is not self.REMOVED:
@@ -59,7 +61,7 @@ class PriorityQueue():
 
     def __mark_remove(self, item):
         entry = self.entries_finder.pop(item)
-        entry[-1] = self.REMOVED ## marca a última posição como REMOVED
+        entry[-1] = self.REMOVED  ## marca a última posição como REMOVED
 
     def empty(self):
         return len(self.entries_finder) == 0
